@@ -41,21 +41,28 @@ self.addEventListener('activate', function onActivate(event) {
     );
 });
 
+self.addEventListener('fetch', function onFetch(event) {
+    if (event.request.url.indexOf(location.origin) === 0) {
+        console.log(event.request);
+        event.respondWith(precacheResourceOrNetwork(event));
+    }
+});
+
 // self.addEventListener('push', event => {
 //     event.waitUntil(
 //         displayNotification(event.data.json())
 //     );
 // });
 
-// function precacheResourceOrNetwork(event) {
-//     const clonedRequest = event.request.clone();
-//     return caches
-//         .match(event.request)
-//         .then(resp => {
-//             debugger;
-//             resp || fetch(clonedRequest);
-//         });
-// }
+function precacheResourceOrNetwork(event) {
+    const clonedRequest = event.request.clone();
+    return caches
+        .match(event.request)
+        .then(resp => {
+            debugger;
+            resp || fetch(clonedRequest);
+        });
+}
 
 // function displayNotification(payload, tag = 'common-tag') {
 //     const title = 'Geeky & Fun';
