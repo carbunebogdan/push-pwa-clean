@@ -1,0 +1,13 @@
+{
+  "name": "demo-pwa",
+  "version": "1.0.0",
+  "description": "demo for pwa and push notification using firebase",
+  "scripts": {
+    "start": "light-server -s . no-reload"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "light-server": "^2.5.1"
+  }
+}

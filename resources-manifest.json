@@ -1,0 +1,10 @@
+{
+    "TO_PRECACHE": [
+        "/",
+        "public/styles/main.css",
+        "appConfig.js",
+        "manifest.json",
+        "resources-manifest.json",        
+        "public/scripts/app.js",
+    ]
+}

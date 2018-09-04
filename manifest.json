@@ -1,0 +1,10 @@
+{
+    "name": "PwaAndPush",
+    "short_name": "PwaAndPush",
+    "theme_color": "#4141ac",
+    "background_color": "#b1fcf8",
+    "display": "standalone",
+    "orientation": "portrait",
+    "scope": ".",
+    "start_url": "."
+  }
