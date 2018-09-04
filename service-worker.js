@@ -48,11 +48,11 @@ self.addEventListener('fetch', function onFetch(event) {
     }
 });
 
-// self.addEventListener('push', event => {
-//     event.waitUntil(
-//         displayNotification(event.data.json())
-//     );
-// });
+self.addEventListener('push', event => {
+    event.waitUntil(
+        displayNotification(event.data.json())
+    );
+});
 
 function precacheResourceOrNetwork(event) {
     const clonedRequest = event.request.clone();
@@ -64,22 +64,44 @@ function precacheResourceOrNetwork(event) {
         });
 }
 
-// function displayNotification(payload, tag = 'common-tag') {
-//     const title = 'Geeky & Fun';
+self.addEventListener('notificationclick', function (event) {
+    event.notification.close();
+    event.waitUntil(
+        self.clients.matchAll({
+            type: 'window'
+        }).then(clientList => {
+            for (let i = 0; i < clientList.length; i++) {
+                if (
+                    (clientList[i].url === location.origin || clientList[i].url.indexOf('localhost') !== -1) &&
+                    'focus' in clientList[i]
+                ) {
+                    return clientList[i].focus();
+                }
+            }
+            if (self.clients.openWindow) {
+                return self.clients.openWindow('https://carbunebogdan.github.io/push-pwa-clean/');
+            }
+            return Promise.reject();
+        })
+    );
+});
 
-//     return self.clients.matchAll({
-//         type: 'window'
-//     }).then(windowClients => {
-//         if (windowClients.filter(client => client.focused).length === 0) {
-//             return self.registration.showNotification(title, {
-//                 icon: 'https://geekyandfun.github.io/PWA-workshop/public/images/icons/icon-512x512.png',
-//                 body: `${payload.data.text}
-// ${payload.data.author} | ${self.getDateString(new Date(Number(payload.data.timestamp)))}`,
-//                 tag,
-//                 vibrate: [100, 50, 100, 50, 100, 50],
-//                 requireInteraction: false
-//             });
-//         }
-//         return true;
-//     });
-// }
+function displayNotification(payload, tag = 'common-tag') {
+    const title = 'clean pwa & push';
+
+    return self.clients.matchAll({
+        type: 'window'
+    }).then(windowClients => {
+        if (windowClients.filter(client => client.focused).length === 0) {
+            return self.registration.showNotification(title, {
+                icon: 'https://carbunebogdan.github.io/push-pwa-clean/public/images/icons/icon-512x512.png',
+                body: `${payload.data.text}
+${payload.data.author} | ${self.getDateString(new Date(Number(payload.data.timestamp)))}`,
+                tag,
+                vibrate: [100, 50, 100, 50, 100, 50],
+                requireInteraction: false
+            });
+        }
+        return true;
+    });
+}
