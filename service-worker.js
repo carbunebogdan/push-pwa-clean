@@ -59,7 +59,6 @@ function precacheResourceOrNetwork(event) {
     return caches
         .match(event.request)
         .then(resp => {
-            debugger;
             resp || fetch(clonedRequest);
         });
 }
