@@ -4,7 +4,7 @@ let uid;
 let init = () => {
     /** Service Worker */
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('../../service-worker.js').then(
+        navigator.serviceWorker.register('service-worker.js').then(
             registration => {
                 setUpMessagingPushNotifications(registration);
             },
