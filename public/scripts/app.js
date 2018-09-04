@@ -2,6 +2,17 @@ const databaseRef = window.firebase.database().ref('/messages');
 let uid;
 
 let init = () => {
+    /** Service Worker */
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('../../service-worker.js').then(
+            registration => {
+                setUpMessagingPushNotifications(registration);
+            },
+            err => {
+                console.error(`Oups ${err}`);
+            }
+        );
+    }
     uid = localStorage.getItem('uid');
     if (!uid) {
         uid = new Date().getUTCMilliseconds();
@@ -15,18 +26,6 @@ let init = () => {
         e.preventDefault();
         sendMessage(document.getElementById('msgInput').value);
     })
-
-    /** Service Worker */
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('../../service-worker.js').then(
-            registration => {
-                setUpMessagingPushNotifications(registration);
-            },
-            err => {
-                console.error(`Oups ${err}`);
-            }
-        );
-    }
 }
 
 init();
