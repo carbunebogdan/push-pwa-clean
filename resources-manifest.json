@@ -5,6 +5,6 @@
         "appConfig.js",
         "manifest.json",
         "resources-manifest.json",        
-        "public/scripts/app.js",
+        "public/scripts/app.js"
     ]
 }

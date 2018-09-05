@@ -43,12 +43,11 @@ self.addEventListener('activate', function onActivate(event) {
 
 self.addEventListener('fetch', function onFetch(event) {
     if (event.request.url.indexOf(location.origin) === 0) {
-        console.log(event.request);
         event.respondWith(precacheResourceOrNetwork(event));
     }
 });
 
-self.addEventListener('push', event => {
+self.addEventListener('push', event => {console.log(event)
     event.waitUntil(
         displayNotification(event.data.json())
     );
@@ -56,12 +55,9 @@ self.addEventListener('push', event => {
 
 function precacheResourceOrNetwork(event) {
     const clonedRequest = event.request.clone();
-    return caches
-        .match(event.request)
-        .then(resp => {
-            debugger;
-            resp || fetch(clonedRequest);
-        });
+    return caches.match(event.request, {
+        cacheName: CACHE_NAME
+    }).then(resp => resp || fetch(clonedRequest));
 }
 
 self.addEventListener('notificationclick', function (event) {
@@ -96,7 +92,7 @@ function displayNotification(payload, tag = 'common-tag') {
             return self.registration.showNotification(title, {
                 icon: 'https://carbunebogdan.github.io/push-pwa-clean/public/images/icons/icon-512x512.png',
                 body: `${payload.data.text}
-${payload.data.author} | ${self.getDateString(new Date(Number(payload.data.timestamp)))}`,
+${payload.data.author} | ${new Date(payload.data.timestamp)}`,
                 tag,
                 vibrate: [100, 50, 100, 50, 100, 50],
                 requireInteraction: false
