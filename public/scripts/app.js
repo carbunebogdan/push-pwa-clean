@@ -15,7 +15,7 @@ let init = () => {
     }
     uid = localStorage.getItem('uid');
     if (!uid) {
-        uid = new Date().getUTCMilliseconds();
+        uid = (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase()
         localStorage.setItem('uid', uid);
     }
     databaseRef.on('child_added', data => {
