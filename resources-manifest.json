@@ -1,0 +1,11 @@
+{
+    "TO_PRECACHE": [
+        "/",
+        "/push-pwa-clean/",
+        "public/styles/main.css",
+        "appConfig.js",
+        "manifest.json",
+        "resources-manifest.json",        
+        "public/scripts/app.js"
+    ]
+}
