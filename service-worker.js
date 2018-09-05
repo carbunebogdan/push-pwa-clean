@@ -92,7 +92,7 @@ function displayNotification(payload, tag = 'common-tag') {
             return self.registration.showNotification(title, {
                 icon: 'https://carbunebogdan.github.io/push-pwa-clean/public/images/icons/icon-512x512.png',
                 body: `${payload.data.text}
-${payload.data.author} | ${self.getDateString(new Date(Number(payload.data.timestamp)))}`,
+                ${payload.data.author} | ${new Date(payload.data.timestamp)}`,
                 tag,
                 vibrate: [100, 50, 100, 50, 100, 50],
                 requireInteraction: false
